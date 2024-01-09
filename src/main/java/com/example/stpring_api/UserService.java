@@ -1,5 +1,6 @@
 package com.example.stpring_api;
 
+import com.example.stpring_api.dto.RegisterDto;
 import com.example.stpring_api.entity.User;
 import com.example.stpring_api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public  class UserService   {
     private final UserRepository userRepository;
+
+
 
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+
+    }
+
+    public void registerUser(RegisterDto registerDto) {
+        User user = new User();
+        user.setEmail(registerDto.getEmail());
+        userRepository.save(user);
     }
 
     public List<User> getUsers() {
@@ -42,4 +52,5 @@ public class UserService {
         userRepository.deleteById(id);
         return !userRepository.existsById(id);
     }
+
 }

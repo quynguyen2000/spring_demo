@@ -1,5 +1,6 @@
 package com.example.stpring_api;
 
+import com.example.stpring_api.dto.RegisterDto;
 import com.example.stpring_api.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,13 +11,25 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody RegisterDto registerDto) {
+        userService.registerUser(registerDto);
+        return ResponseEntity.ok("User registered successfully.");
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<?> login() {
+        // Handle login logic
+        return ResponseEntity.ok("Login successful.");
     }
 
     @GetMapping
